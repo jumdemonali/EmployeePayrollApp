@@ -1,3 +1,4 @@
+
 window.addEventListener('DOMContentLoaded', (event) => {
     salaryOutput();
     validateName();
@@ -59,3 +60,4 @@ window.addEventListener('DOMContentLoaded', (event) => {
         throw "Start date is beyond 30 days";
     }
   }
+  
