@@ -1,38 +1,50 @@
+let empPayrollList;
 window.addEventListener('DOMContentLoaded', (event) => {
-    createInnerHtml();
-   });
+   empPayrollList=getEmployeeDataFromStorage();
+   createInnerHtml();
+   document.querySelector(".emp-count").textContent= empPayrollList.length;
+  });
+
+  const getEmployeeDataFromStorage = () => {
+      return localStorage.getItem("EmployeePayrollList") ?
+      JSON.parse(localStorage.getItem("EmployeePayrollList")) : [] ;
+  }
+  
+  let createInnerHtml = () => {
    
-   let createInnerHtml = () => {
-    
-     let headerHTML="<tr> <th> </th><th>Name</th> <th>Gender</th><th>Department</th><th>Salary</th><th>Start Date</th><th>Actions</th></tr>";
+    let headerHTML="<tr> <th> </th><th>Name</th> <th>Gender</th><th>Department</th><th>Salary</th><th>Start Date</th><th>Actions</th></tr>";
+    let innerHTML = `${headerHTML}`;
  
-     let innerHTML = `${headerHTML}
-    
- <tr><td>
-     <img class="profile" src="../asset/profile-images/Ellipse -1.png">
-     </td>
-     <td> Monali Jumde </td>
-     <td>Male</td>
-     <td>
-         <div class="dept-label">Engineer</div>
-         <div class="dept-label">Other</div>
-     </td>
-     <td>750000</td>
-     <td>1 Oct 2021</td>
-     <td>
-         <img alt="delete" src="../asset/icons/delete-black-18dp.svg">
-         <img alt="edit" src="../asset/icons/create-black-18dp.svg">
-     </td>
- </tr>`;
- document.querySelector("#display").innerHTML = innerHTML;
-   }
-   const getDeptHtml =(deptList) =>{
-    let deptHtml= '';
-    for(const dept of deptList){
-        deptHtml=`${deptHtml} <div class='dept-label'>${dept}</div>`
+    for (const employeePayrollData of empPayrollList) {
+     innerHTML = `${innerHTML}
+   
+<tr><td>
+    <img class="profile" src="${employeePayrollData._profilePic}">
+    </td>
+    <td>${employeePayrollData._name}</td>
+    <td>${employeePayrollData._gender}</td>
+    <td>
+        ${getDeptHtml(employeePayrollData._department)}
+    </td>
+    <td>${employeePayrollData._salary}</td>
+    <td>${employeePayrollData._startDate}</td>
+    <td>
+        <img alt="delete" src="../asset/icons/delete-black-18dp.svg">
+        <img alt="edit" src="../asset/icons/create-black-18dp.svg">
+    </td>
+</tr> `;
     }
-   return deptHtml;
-}
+     document.querySelector('#display').innerHTML = innerHTML;
+  }
+
+  const getDeptHtml = (deptList) => {
+      let deptHtml= '';
+      for (const dept of deptList) {
+          deptHtml=`${deptHtml} <div class = 'dept-label'>${dept}</div>`
+      }
+     return deptHtml;
+  }
+
 
 
 
